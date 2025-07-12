@@ -23,7 +23,7 @@ This is the backend for a Diet App, built with Node.js, Express, and TypeScript.
 
    ```bash
    git clone https://github.com/HenzoAbreu/diet-app
-   cd diet_app
+   cd diet-app
    ```
 
 2. **Install dependencies:**
