@@ -29,6 +29,7 @@ create table tb_food (
  INDEX idx_deleted_at (deleted_at)
 );
 
+
 CREATE TABLE tb_meal_plan (
  meal_plan_id int not null auto_increment primary key,
  meal_plan_uuid varchar(36) not null unique,

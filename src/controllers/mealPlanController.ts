@@ -20,12 +20,8 @@ export const createMealPlanController = async (
 ) => {
   const mealPlanData: CreateMealPlanRequest = req.body;
 
-  try {
-    const mealPlan = await createMealPlanService(mealPlanData);
-    res.status(200).json({ success: true, data: mealPlan });
-  } catch (err) {
-    next(err);
-  }
+  const mealPlan = await createMealPlanService(mealPlanData);
+  res.status(200).json({ success: true, data: mealPlan });
 };
 
 export const getMealPlanController = async (
@@ -63,13 +59,9 @@ export const getAllMealPlansController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const mealPlans = await getAllMealPlansService();
+  const mealPlans = await getAllMealPlansService();
 
-    res.status(200).json({ success: true, data: mealPlans });
-  } catch (err) {
-    next(err);
-  }
+  res.status(200).json({ success: true, data: mealPlans });
 };
 
 export const updateMealPlan = async (
@@ -79,16 +71,13 @@ export const updateMealPlan = async (
 ) => {
   const { meal_plan_uuid } = req.params;
   const mealPlanUpdates: UpdateMealPlanRequest = req.body;
-  try {
-    const updatedMealPlan = await updateMealPlanService(
-      meal_plan_uuid,
-      mealPlanUpdates,
-    );
 
-    res.status(204).json({ success: true, data: updatedMealPlan });
-  } catch (err) {
-    next(err);
-  }
+  const updatedMealPlan = await updateMealPlanService(
+    meal_plan_uuid,
+    mealPlanUpdates,
+  );
+
+  res.status(204).json({ success: true, data: updatedMealPlan });
 };
 
 export const deleteMealPlanController = async (
@@ -98,11 +87,7 @@ export const deleteMealPlanController = async (
 ) => {
   const { meal_plan_uuid } = req.params;
 
-  try {
-    await deleteMealPlanService(meal_plan_uuid);
+  await deleteMealPlanService(meal_plan_uuid);
 
-    res.status(200).json("Meal Plan deleted successfully!");
-  } catch (err) {
-    next(err);
-  }
+  res.status(200).json("Meal Plan deleted successfully!");
 };

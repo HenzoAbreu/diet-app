@@ -3,7 +3,7 @@ import cors from "cors";
 import app from "./app";
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 app.use(
   cors({
     credentials: true,

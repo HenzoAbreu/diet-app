@@ -26,13 +26,10 @@ export const createMealController = async (
   if (!mealData.name || !mealData.meal_plan_uuid) {
     throw new BadRequestError("Please insert required information!");
   }
-  try {
-    const meal = await createMealService(mealData);
 
-    res.status(201).json({ success: true, data: meal });
-  } catch (err) {
-    next(err);
-  }
+  const meal = await createMealService(mealData);
+
+  res.status(201).json({ success: true, data: meal });
 };
 
 export const getAllMealsController = async (
@@ -40,13 +37,9 @@ export const getAllMealsController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const meals = await getAllMealsService();
+  const meals = await getAllMealsService();
 
-    res.status(200).json({ success: true, data: meals });
-  } catch (err) {
-    next(err);
-  }
+  res.status(200).json({ success: true, data: meals });
 };
 
 export const getAllMealsFromMealPlanController = async (
@@ -55,13 +48,10 @@ export const getAllMealsFromMealPlanController = async (
   next: NextFunction,
 ) => {
   const { meal_plan_id } = req.params;
-  try {
-    const meals = await getAllMealsFromMealPlanService(parseInt(meal_plan_id));
 
-    res.status(200).json({ success: true, data: meals });
-  } catch (err) {
-    next(err);
-  }
+  const meals = await getAllMealsFromMealPlanService(parseInt(meal_plan_id));
+
+  res.status(200).json({ success: true, data: meals });
 };
 
 export const getMealByUuidController = async (
@@ -70,13 +60,10 @@ export const getMealByUuidController = async (
   next: NextFunction,
 ) => {
   const { meal_uuid } = req.params;
-  try {
-    const meal = await getMealByUuidService(meal_uuid);
 
-    res.status(200).json({ success: true, data: meal });
-  } catch (err) {
-    next(err);
-  }
+  const meal = await getMealByUuidService(meal_uuid);
+
+  res.status(200).json({ success: true, data: meal });
 };
 
 export const updateMealController = async (
@@ -86,13 +73,10 @@ export const updateMealController = async (
 ) => {
   const { meal_uuid } = req.params;
   const mealData: UpdateMealRequest = req.body;
-  try {
-    const updatedMeal = await updateMealService(meal_uuid, mealData);
 
-    res.status(201).json({ success: true, data: updatedMeal });
-  } catch (err) {
-    next(err);
-  }
+  const updatedMeal = await updateMealService(meal_uuid, mealData);
+
+  res.status(201).json({ success: true, data: updatedMeal });
 };
 
 export const deleteMealController = async (
@@ -101,13 +85,10 @@ export const deleteMealController = async (
   next: NextFunction,
 ) => {
   const { meal_uuid } = req.params;
-  try {
-    await deleteMealService(meal_uuid);
 
-    res
-      .status(200)
-      .json({ success: true, message: "Meal deleted successfully!" });
-  } catch (err) {
-    next(err);
-  }
+  await deleteMealService(meal_uuid);
+
+  res
+    .status(200)
+    .json({ success: true, message: "Meal deleted successfully!" });
 };

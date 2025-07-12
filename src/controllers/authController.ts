@@ -26,20 +26,16 @@ export const signupController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const userData: SignupRequest = req.body;
-    if (!userData) {
-      throw new BadRequestError("Please insert all information required!");
-    }
-    const result = await authService.signup(userData);
-
-    res.status(201).json({
-      success: true,
-      data: { user: toPublicUser(result.user), token: result.token },
-    });
-  } catch (err) {
-    next(err);
+  const userData: SignupRequest = req.body;
+  if (!userData) {
+    throw new BadRequestError("Please insert all information required!");
   }
+  const result = await authService.signup(userData);
+
+  res.status(201).json({
+    success: true,
+    data: { user: toPublicUser(result.user), token: result.token },
+  });
 };
 
 export const signinController = async (
@@ -47,18 +43,14 @@ export const signinController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const userData: SigninRequest = req.body;
-    if (!userData) {
-      throw new BadRequestError("Please insert all information required!");
-    }
-    const result = await authService.signin(userData);
-
-    res.status(201).json({
-      success: true,
-      data: { user: toPublicUser(result.user), token: result.token },
-    });
-  } catch (err) {
-    next(err);
+  const userData: SigninRequest = req.body;
+  if (!userData) {
+    throw new BadRequestError("Please insert all information required!");
   }
+  const result = await authService.signin(userData);
+
+  res.status(201).json({
+    success: true,
+    data: { user: toPublicUser(result.user), token: result.token },
+  });
 };

@@ -11,16 +11,12 @@ export const getFoodByUUIDController = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
-  try {
-    const food_uuid = req.params.food_uuid;
+): Promise<void> => {
+  const food_uuid = req.params.food_uuid;
 
-    const food = await foodService.getFoodByUUID(food_uuid);
+  const food = await foodService.getFoodByUUID(food_uuid);
 
-    res.status(200).json({ success: true, data: food });
-  } catch (err) {
-    next(err);
-  }
+  res.status(200).json({ success: true, data: food });
 };
 
 export const getAllFoodController = async (
@@ -28,13 +24,9 @@ export const getAllFoodController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const foods = await foodService.getAllFood();
+  const foods = await foodService.getAllFood();
 
-    res.status(200).json({ success: true, data: foods });
-  } catch (err) {
-    next(err);
-  }
+  res.status(200).json({ success: true, data: foods });
 };
 
 export const createFoodController = async (
@@ -42,17 +34,13 @@ export const createFoodController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const foodData: CreateFoodRequest = req.body;
-    if (!foodData) {
-      throw new ValidationError("Please insert required information!");
-    }
-
-    const food = await foodService.createFood(foodData);
-    res.status(201).json({ success: true, data: food });
-  } catch (err) {
-    next(err);
+  const foodData: CreateFoodRequest = req.body;
+  if (!foodData) {
+    throw new ValidationError("Please insert required information!");
   }
+
+  const food = await foodService.createFood(foodData);
+  res.status(201).json({ success: true, data: food });
 };
 
 export const updateFoodController = async (
@@ -60,16 +48,12 @@ export const updateFoodController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const food_uuid = req.params.food_uuid;
+  const food_uuid = req.params.food_uuid;
 
-    const foodData: UpdateFoodRequest = req.body;
-    const updatedFood = await foodService.updateFood(food_uuid, foodData);
+  const foodData: UpdateFoodRequest = req.body;
+  const updatedFood = await foodService.updateFood(food_uuid, foodData);
 
-    res.status(200).json({ success: true, data: updatedFood });
-  } catch (err) {
-    next(err);
-  }
+  res.status(200).json({ success: true, data: updatedFood });
 };
 
 export const deleteFoodController = async (
@@ -77,12 +61,8 @@ export const deleteFoodController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const food_uuid = req.params.food_uuid;
-    await foodService.deleteFood(food_uuid);
+  const food_uuid = req.params.food_uuid;
+  await foodService.deleteFood(food_uuid);
 
-    res.status(204).json({ success: true, data: null });
-  } catch (err) {
-    next(err);
-  }
+  res.status(204).json({ success: true, data: null });
 };

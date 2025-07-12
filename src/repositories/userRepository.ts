@@ -10,7 +10,8 @@ export const createUser = async (
   password_salt: string,
 ): Promise<User | null> => {
   const pool = getPool();
-  const query = `INSERT INTO tb_user (full_name, user_uuid, email, password, password_salt)
+  const query = `
+  INSERT INTO tb_user (full_name, user_uuid, email, password, password_salt)
   VALUES (? ,? ,? ,? ,?)`;
 
   const [result] = await pool.execute<ResultSetHeader>(query, [

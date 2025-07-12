@@ -5,14 +5,14 @@ services:
   db:
     image: mysql:8.0
     container_name: diet_app_db
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: diet_app
       MYSQL_USER: diet_user
       MYSQL_PASSWORD: diet_password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
@@ -21,16 +21,17 @@ services:
   app:
     build: .
     container_name: diet_app_backend
-    restart: always
+    restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
-      - DB_HOST=db
-      - DB_USER=diet_user
-      - DB_PASSWORD=diet_password
-      - DB_NAME=diet_app
-      - DB_PORT=3306
+      NODE_ENV: development
+      DB_HOST: db
+      DB_USER: diet_user
+      DB_PASSWORD: diet_password
+      DB_NAME: diet_app
+      DB_PORT: 3306
+      PORT: 3000
     depends_on:
       - db
 

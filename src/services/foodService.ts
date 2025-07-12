@@ -34,7 +34,7 @@ export const getFoodByUUID = async (
   food_uuid: string,
 ): Promise<Food | null> => {
   if (!food_uuid || !isValidV4(food_uuid)) {
-    throw new BadRequestError("Invalid food UUID");
+    throw new BadRequestError("Invalid food UUID"); /////////// duvida aqui
   }
   const food = await foodRepo.getFoodByUuid(food_uuid);
   if (!food) {

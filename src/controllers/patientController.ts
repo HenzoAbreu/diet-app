@@ -29,13 +29,9 @@ export const createPatientController = async (
 ) => {
   const patientData: CreatePatientRequest = req.body;
 
-  try {
-    const patient = await createPatientService(patientData);
+  const patient = await createPatientService(patientData);
 
-    res.status(201).json({ success: true, data: toPublicPatient(patient) });
-  } catch (err) {
-    next(err);
-  }
+  res.status(201).json({ success: true, data: toPublicPatient(patient) });
 };
 
 export const getAllPatientsController = async (
@@ -43,13 +39,9 @@ export const getAllPatientsController = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const patients = await getAllPatientsService();
-    const publicPatient = patients.map(toPublicPatient);
-    res.status(200).json({ success: true, data: publicPatient });
-  } catch (err) {
-    next(err);
-  }
+  const patients = await getAllPatientsService();
+  const publicPatient = patients.map(toPublicPatient);
+  res.status(200).json({ success: true, data: publicPatient });
 };
 
 export const getPatientByUuidController = async (
@@ -62,12 +54,8 @@ export const getPatientByUuidController = async (
     throw new BadRequestError("Please provide a valid patient UUID!");
   }
 
-  try {
-    const patient = await getPatientByUuidService(patient_uuid);
-    res.status(200).json({ success: true, data: toPublicPatient(patient) });
-  } catch (err) {
-    next(err);
-  }
+  const patient = await getPatientByUuidService(patient_uuid);
+  res.status(200).json({ success: true, data: toPublicPatient(patient) });
 };
 
 export const updatePatientController = async (
@@ -81,14 +69,10 @@ export const updatePatientController = async (
     throw new BadRequestError("Please insert patient UUID");
   }
 
-  try {
-    const updatedPatient = await updatePatientService(patient_uuid, updates);
-    res
-      .status(204)
-      .json({ success: true, data: toPublicPatient(updatedPatient) });
-  } catch (err) {
-    next(err);
-  }
+  const updatedPatient = await updatePatientService(patient_uuid, updates);
+  res
+    .status(204)
+    .json({ success: true, data: toPublicPatient(updatedPatient) });
 };
 
 export const deletePatientController = async (
@@ -100,10 +84,7 @@ export const deletePatientController = async (
   if (!patient_uuid) {
     throw new BadRequestError("Please insert patient UUID");
   }
-  try {
-    await deletePatientService(patient_uuid);
-    res.status(200).json("Patient deleted successfully!");
-  } catch (err) {
-    next(err);
-  }
+
+  await deletePatientService(patient_uuid);
+  res.status(200).json("Patient deleted successfully!");
 };
