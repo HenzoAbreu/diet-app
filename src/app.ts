@@ -6,16 +6,23 @@ import mealRoutes from "./routes/mealRoutes";
 import authRoutes from "./routes/authRoutes";
 import mealPlanRoutes from "./routes/mealPlanRoutes";
 import patientRoutes from "./routes/patientRoutes";
+import { authenticateToken } from "./middlewares/authMiddleware";
 
 const app = express();
 
 app.use(express.json());
+
+// auth routes
 app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
-app.use("/food", foodRoutes);
-app.use("/meal", mealRoutes);
-app.use("/meal-plan", mealPlanRoutes);
-app.use("/patient", patientRoutes);
+
+// all routes
+app.use("/user", authenticateToken, userRoutes);
+app.use("/food", authenticateToken, foodRoutes);
+app.use("/meal", authenticateToken, mealRoutes);
+app.use("/meal-plan", authenticateToken, mealPlanRoutes);
+app.use("/patient", authenticateToken, patientRoutes);
+
+// Global error handler
 app.use(errorHandler);
 
 export default app;

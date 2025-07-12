@@ -20,7 +20,7 @@ async function verifyPassword(password: string, hashedPassword: string) {
 
 export const updateUserService = async (
   user_uuid: string,
-  updates: Partial<User>,
+  updates: Partial<Pick<User, "full_name" | "email">>,
 ): Promise<User> => {
   const user = await userRepo.getUserByUuid(user_uuid);
   if (!user) {
@@ -28,9 +28,6 @@ export const updateUserService = async (
   }
 
   const updateUser = await userRepo.updateUser(user_uuid, updates);
-  if (!updateUser) {
-    throw new NotFoundError("User not found!");
-  }
 
   const updatedUser = await userRepo.getUserByUuid(user_uuid);
   if (!updatedUser) {

@@ -35,9 +35,7 @@ export const createUser = async (
 
 export const updateUser = async (
   user_uuid: string,
-  updates: Partial<
-    Pick<User, "email" | "full_name" | "password" | "password_salt">
-  >,
+  updates: Partial<Pick<User, "email" | "full_name">>,
 ): Promise<User> => {
   const pool = getPool();
 
