@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: diet_app_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: diet_app
+      MYSQL_USER: diet_user
+      MYSQL_PASSWORD: diet_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+  # Node.js App
+  app:
+    build: .
+    container_name: diet_app_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_USER=diet_user
+      - DB_PASSWORD=diet_password
+      - DB_NAME=diet_app
+      - DB_PORT=3306
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
